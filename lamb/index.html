@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<meta  charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WEJ: Lamb</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    font-family: Georgia;
+    text-align: center;
+  }
+</style>
+
+<h1 id="lamb">Lamb</h1>
+<p>A statically typed and lazy evaluated implementation of Lambda Calculus.</p>
+<h2 id="synopsis">Synopsis</h2>
+<pre>
+<b>lamb</b> [<b>-t</b>|<b>--typed</b>|<b>-u</b>|<b>--untyped</b>] [<b>-c</b>|<b>--compile</b>|<b>-e</b>|<b>--eval</b>|<b>-i</b>|<b>--infer</b>] [<b>--target</b> {<b>linux</b>|<b>windows</b>}] < <i>FILE</i><b>.lam</b> > <i>FILE</i><b>.s</b>
+</pre>
+<h2 id="prerequisites">Prerequisites</h2>
+<p><em>Required</em> commands:</p>
+<ul>
+<li>mlton</li>
+<li>mlyacc</li>
+<li>mllex</li>
+<li>gcc</li>
+</ul>
+<p><em>Optional</em> commands:</p>
+<ul>
+<li>x86_64-w64-mingw32-gcc (for windows target)</li>
+</ul>
+<h2 id="building">Building</h2>
+<pre><code>$ make</code></pre>
+<h2 id="run-examples">Run Examples</h2>
+<p><em>After</em> build:</p>
+<pre><code>$ make -C examples/hello TARGET=linux
+$ examples/hello/hello
+hello world</code></pre>
+<pre><code># x86_64-w64-mingw32-gcc is required.
+$ make -C examples/hello TARGET=windows
+# Copy examples/hello/hello.exe to your own windows and run it.</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="hello-world">Hello World</h3>
+<pre>
+<b>let</b> K := ^x. ^_. x <b>in</b>
+  K("hello world\n")
+</pre>
+<h3 id="cat-program">Cat Program</h3>
+<pre>
+<b>let</b> I := ^x. x <b>in</b>
+  I
+</pre>
+<h2 id="features">Features</h2>
+<h3 id="lazy-evaluation">Lazy Evaluation</h3>
+<p>Lamb has the call-by-need semantics. For example, in the following program, the stdin (the first argument) is not evaluated. Therefore, the program reads no input, writes &quot;hello world&quot; to the stdout and terminates.</p>
+<pre>
+<b>let</b> K := ^x. ^_. x <b>in</b>
+  K("hello world\n")
+</pre>
+<h3 id="type-system">Type System</h3>
+<h4 id="type-inference">Type Inference</h4>
+<p>Lamb programs are statically typed, but you don't need to write types. The type of the following program is automatically inferred to be <code>'a -&gt; 'a</code>.</p>
+<pre>
+<b>let</b> I := ^x. x <b>in</b>
+  I
+</pre>
+<h4 id="let-polymorphism">Let-Polymorphism</h4>
+<p>Lamb supports let-polymorphism. Therefore, the following program is valid.</p>
+<pre>
+<b>let</b> I := ^x. x <b>in</b>
+  I I
+</pre>
+<p><em>Note</em>: In a monomorphic language, <code>I I</code> is invalid, because <code>^x. x x</code> would also become valid if that expression were valid.</p>
+<h3 id="x64-code-generation">x64 Code Generation</h3>
+<p>Lamb supports x64 code generation by default. For example, the following command compiles <code>foo.lam</code> to <code>foo.s</code>.</p>
+<pre><code>$ lamb &lt; foo.lam &gt; foo.s</code></pre>
+<p>To generate executables:</p>
+<ul>
+<li>Use <code>as</code> and <code>ld</code>. It's hard.</li>
+<li>Use <code>gcc</code>. It's easy.</li>
+</ul>
+<p>We recommend you use <code>gcc</code>. But you can use <code>as</code> and <code>ld</code>. If you use <code>as</code> and <code>ld</code>, you need to link the libc manually.</p>
+<h3 id="vm-execution">VM Execution</h3>
+<p>Lamb supports VM (Krivine Machine) execution.</p>
+<pre><code>$ lamb --eval &lt; foo.lam</code></pre>
+<h3 id="infer-and-print-the-type">Infer and Print the Type</h3>
+<pre><code>$ lamb --infer &lt; foo.lam</code></pre>
+<h3 id="untyped-lambda-calculus">Untyped Lambda Calculus</h3>
+<p><em>IF YOU ONLY KNEW THE POWER OF THE DARK SIDE</em>.</p>
+<pre><code>$ lamb --untyped &lt; foo.lam &gt; foo.s</code></pre>
+<h2 id="language-specification">Language Specification</h2>
+<h3 id="lexicon">Lexicon</h3>
+<ul>
+<li><em>lexeme</em> ::= <code>'</code> | <code>(</code> | <code>)</code> | <code>-&gt;</code> | <code>.</code> | <code>:</code> | <code>:=</code> | <code>^</code> | <code>in</code> | <code>let</code> | <strong>NAT</strong> | <strong>CHAR</strong> | <strong>STRING</strong> | <strong>ID</strong></li>
+</ul>
+<p>Where <strong>NAT</strong>, <strong>CHAR</strong>, <strong>STRING</strong> and <strong>ID</strong> are classes of lexemes. The classes are defined by regular expressions.</p>
+<ul>
+<li><strong>SPACE</strong>: <code>/[\t\n\r ]+/</code></li>
+<li><strong>COMMENT</strong>: <code>/--[^\n]*\n/</code></li>
+<li><strong>NAT</strong>: <code>/[0-9]+/</code></li>
+<li><strong>CHAR</strong>: <code>/'\\?.'/</code></li>
+<li><strong>STRING</strong>: <code>/&quot;([^\\&quot;]|\\.)*&quot;/</code></li>
+<li><strong>ID</strong>: <code>/[A-Z_a-z][A-Z_a-z0-9]+/</code></li>
+</ul>
+<p><strong>SPACE</strong> and <strong>COMMENT</strong> are ignored by lexers.</p>
+<h3 id="grammar">Grammar</h3>
+<ul>
+<li><em>program</em> ::= <em>exp</em></li>
+<li><em>ty</em> ::= <em>atty</em> | <em>atty</em> <code>-&gt;</code> <em>ty</em></li>
+<li><em>atty</em> ::= <code>'</code> <strong>ID</strong> | <strong>ID</strong> | <code>(</code> <em>ty</em> <code>)</code></li>
+<li><em>tyopt</em> ::= ε | <code>:</code> <em>ty</em></li>
+<li><em>exp</em> ::= <em>atexp</em> | <code>^</code> <strong>ID</strong> <em>tyopt</em> <code>.</code> <em>exp</em> | <code>let</code> <strong>ID</strong> <em>tyopt</em> <code>:=</code> <em>exp</em> <code>in</code> <em>exp</em></li>
+<li><em>atexp</em> ::= <strong>NAT</strong> | <strong>CHAR</strong> | <strong>STRING</strong> | <strong>ID</strong> | <code>(</code> <em>exp</em> <code>)</code></li>
+</ul>
+<h3 id="informal-semantics">Informal Semantics</h3>
+<p>A Lamb program is a function from a string to a string, where a string is represented as a church list of church numbers. For example, <code>^x.x</code> is a valid Lamb program, reads all inputs from the stdin and writes they to the stdout.</p>
+<p><strong>NAT</strong>, <strong>CHAR</strong> and <strong>STRING</strong> are shorthands for terms.</p>
+<ul>
+<li><strong>NAT</strong> is a shorthand for a church number. For example, <code>0</code> is a shorthand for <code>^x. ^y. y</code></li>
+<li><strong>CHAR</strong> is a shorthand for a church number. The difference between <strong>NAT</strong> and <strong>CHAR</strong> is simply the notation.</li>
+<li><strong>STRING</strong> is a shorthand for a church list of church numbers.</li>
+</ul>
+<h2 id="license">License</h2>
+<p>GPLv3.</p>
