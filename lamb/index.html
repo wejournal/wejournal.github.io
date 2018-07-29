@@ -37,12 +37,12 @@
 <pre><code>$ make</code></pre>
 <h2 id="run-examples">Run Examples</h2>
 <p><em>After</em> build:</p>
-<pre><code>$ make -C examples/hello TARGET=linux
-$ examples/hello/hello
+<pre><code>$ make -C examples TARGET=linux
+$ examples/hello
 hello world</code></pre>
 <pre><code># x86_64-w64-mingw32-gcc is required.
-$ make -C examples/hello TARGET=windows
-# Copy examples/hello/hello.exe to your own windows and run it.</code></pre>
+$ make -C examples TARGET=windows
+# Copy examples/hello.exe to your own windows and run it.</code></pre>
 <h2 id="examples">Examples</h2>
 <h3 id="hello-world">Hello World</h3>
 <pre>
@@ -56,7 +56,7 @@ $ make -C examples/hello TARGET=windows
 </pre>
 <h2 id="features">Features</h2>
 <h3 id="lazy-evaluation">Lazy Evaluation</h3>
-<p>Lamb has the call-by-need semantics. For example, in the following program, the stdin (the first argument) is not evaluated. Therefore, the program reads no input, writes &quot;hello world&quot; to the stdout and terminates.</p>
+<p>Lamb has call-by-name semantics. For example, in the following program, the stdin (the first argument) is not evaluated. Therefore, the program reads no input, writes &quot;hello world&quot; to the stdout and terminates.</p>
 <pre>
 <b>let</b> K := ^x. ^_. x <b>in</b>
   K("hello world\n")
@@ -117,7 +117,7 @@ $ make -C examples/hello TARGET=windows
 <li><em>atexp</em> ::= <strong>NAT</strong> | <strong>CHAR</strong> | <strong>STRING</strong> | <strong>ID</strong> | <code>(</code> <em>exp</em> <code>)</code></li>
 </ul>
 <h3 id="informal-semantics">Informal Semantics</h3>
-<p>A Lamb program is a function from a string to a string, where a string is represented as a church list of church numbers. For example, <code>^x.x</code> is a valid Lamb program, reads all inputs from the stdin and writes they to the stdout.</p>
+<p>A Lamb program is a function from a string to a string, where a string is represented as a church list of church numbers. For example, <code>^x.x</code> is a valid Lamb program, reads all input from the stdin and writes they to the stdout.</p>
 <p><strong>NAT</strong>, <strong>CHAR</strong> and <strong>STRING</strong> are shorthands for terms.</p>
 <ul>
 <li><strong>NAT</strong> is a shorthand for a church number. For example, <code>0</code> is a shorthand for <code>^x. ^y. y</code></li>
