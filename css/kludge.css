@@ -14,7 +14,19 @@ body {
 }
 
 a {
-  color: #0080FF;
+  display: inlie-block;
+  border: solid 1px #40C040;
+  color: #404040;
+  background-color: #40C040;
+  text-decoration: none;
+}
+
+a:hover {
+  display: inlie-block;
+  border: solid 1px #00FF00;
+  color: #000000;
+  background-color: #00FF00;
+  text-decoration: none;
 }
 
 p, ul {
