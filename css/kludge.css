@@ -36,7 +36,7 @@ h1, h2, h3, h4, p, pre, ul {
 div.page {
   margin: 0 auto;
   padding: 0;
-  max-width: 656px;
+  max-width: 640px;
   word-wrap: break-word;
 }
 
