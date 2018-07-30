@@ -56,7 +56,7 @@ h1 {
 }
 
 h1, h2 {
-  margin: 8px 0;
+  margin: 16px 0;
 }
 
 h2 {
@@ -64,15 +64,15 @@ h2 {
 }
 
 h3 {
-  margin: 8px 8px 0 16px;
+  margin: 16px 16px 0 16px;
 }
 
 h4 {
-  margin: 8px 8px 0 32px;
+  margin: 16px 16px 0 32px;
 }
 
 p, pre, ul {
-  margin: 8px 8px 0 64px;
+  margin: 16px 16px 0 64px;
 }
 
 p i, p em, ul i, ul em {
