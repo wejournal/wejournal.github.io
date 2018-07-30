@@ -9,8 +9,7 @@ html, body {
 }
 
 body {
-  background: radial-gradient(#404040, #000000);
-  background-attachment: fixed;
+  background-color: #000000;
 }
 
 a {
