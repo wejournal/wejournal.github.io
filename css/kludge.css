@@ -1,0 +1,105 @@
+@font-face {
+  font-family: "IBM BIOS";
+  src: url("/fonts/PxPlus_IBM_BIOS.ttf") format("truetype");
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: radial-gradient(#404040, #000000);
+  background-attachment: fixed;
+}
+
+a {
+  color: #0080FF;
+}
+
+p, ul {
+  color: #40C040;
+}
+
+pre, code {
+  color: #C0C0C0;
+}
+
+body, pre, code {
+  font-family: "IBM BIOS";
+}
+
+h1, h2, h3, h4, p, pre, ul {
+  font-size: 8px;
+}
+
+div.page {
+  margin: 0 auto;
+  padding: 8px;
+  max-width: 656px;
+  word-wrap: break-word;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1, h2 {
+  margin: 8px 0;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+h3 {
+  margin: 8px 8px 0 16px;
+}
+
+h4 {
+  margin: 8px 8px 0 32px;
+}
+
+p, pre, ul {
+  margin: 8px 8px 0 64px;
+}
+
+p i, p em, ul i, ul em {
+  color: #00FF00;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+p b, p strong, ul b, ul strong {
+  color: #00FF00;
+}
+
+pre i, pre em {
+  color: #FFFFFF;
+  font-style: normal;
+  text-decoration: underline;
+}
+
+pre b, pre strong {
+  color: #FFFFFF;
+}
+
+h1 {
+  color: #FF0000;
+}
+
+h2 {
+  color: #FFFF00;
+}
+
+h3 {
+  color: #FF00FF;
+}
+
+h4 {
+  color: #00FFFF;
+}
+
+div.right {
+  text-align: right;
+}
