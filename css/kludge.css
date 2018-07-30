@@ -126,3 +126,7 @@ h4 {
 h1, h2, h3, h4, p, pre, ul {
   line-height: 16px;
 }
+
+div.figure {
+  text-align: center;
+}
