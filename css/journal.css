@@ -20,6 +20,7 @@ h2, h3, h4, p, pre, ul {
   color: #404040;
   font-size: 12px;
   line-height: 16px;
+  text-align: justify;
 }
 
 pre, code {
