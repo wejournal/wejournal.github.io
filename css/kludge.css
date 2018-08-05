@@ -17,6 +17,25 @@ body {
   background-color: #000000;
 }
 
+@media (min-width: 641px) {
+a {
+  display: inlie-block;
+  border: solid 2px #40C040;
+  color: #404040;
+  background-color: #40C040;
+  text-decoration: none;
+}
+
+a:hover {
+  display: inlie-block;
+  border: solid 2px #00FF00;
+  color: #000000;
+  background-color: #00FF00;
+  text-decoration: none;
+}
+}
+
+@media (max-width: 640px) {
 a {
   display: inlie-block;
   border: solid 1px #40C040;
@@ -32,6 +51,7 @@ a:hover {
   background-color: #00FF00;
   text-decoration: none;
 }
+}
 
 p, ul {
   color: #40C040;
@@ -45,11 +65,22 @@ body, pre, code {
   font-family: "IBM BIOS";
 }
 
+@media (min-width: 641px) {
+span.ja {
+  position: relative;
+  top: -2px;
+  left: 0;
+  font-family: "Misaki Gothic";
+}
+}
+
+@media (max-width: 640px) {
 span.ja {
   position: relative;
   top: -1px;
   left: 0;
   font-family: "Misaki Gothic";
+}
 }
 
 @media (min-width: 641px) {
@@ -86,14 +117,37 @@ h1 {
   text-align: center;
 }
 
+@media (min-width: 641px) {
+h1, h2 {
+  margin: 32px 0;
+}
+}
+
+@media (max-width: 640px) {
 h1, h2 {
   margin: 16px 0;
+}
 }
 
 h2 {
   text-transform: uppercase;
 }
 
+@media (min-width: 641px) {
+h3 {
+  margin: 32px 0 32px 32px;
+}
+
+h4 {
+  margin: 32px 0 32px 64px;
+}
+
+p, pre, ul {
+  margin: 32px 0 32px 128px;
+}
+}
+
+@media (max-width: 640px) {
 h3 {
   margin: 16px 0 16px 16px;
 }
@@ -104,6 +158,7 @@ h4 {
 
 p, pre, ul {
   margin: 16px 0 16px 64px;
+}
 }
 
 p i, p em, ul i, ul em {
