@@ -142,8 +142,16 @@ h4 {
   color: #00FFFF;
 }
 
+@media (min-width: 641px) {
+h1, h2, h3, h4, p, pre, ul {
+  line-height: 32px;
+}
+}
+
+@media (max-width: 640px) {
 h1, h2, h3, h4, p, pre, ul {
   line-height: 16px;
+}
 }
 
 div.figure {
