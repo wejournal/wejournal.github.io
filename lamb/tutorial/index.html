@@ -8,7 +8,7 @@
 <h1 id="a-lamb-tutorial">A Lamb Tutorial</h1>
 <p align="right">IN <a href="/">THE WHITEEARTH JOURNAL.</a></p>
 <h2 id="prerequisites">PREREQUISITES</h2>
-<p><span class="ja">以下のコマンドが必要です</span>:</p>
+<p>以下のコマンドが必要です:</p>
 <ul>
 <li>mlton</li>
 <li>mlyacc</li>
@@ -16,32 +16,32 @@
 <li>gcc</li>
 <li>x86_64-w64-mingw32-gcc</li>
 </ul>
-<p><span class="ja">これらのコマンドをインストールする方法は環境によって異なると思いますが，</span> Ubuntu <span class="ja">の場合は，つぎのパッケージをインストールすればよろしい．</span></p>
+<p>これらのコマンドをインストールする方法は環境によって異なると思いますが， Ubuntu の場合は，つぎのパッケージをインストールすればよろしい．</p>
 <pre><code>$ sudo apt install mlton
 $ sudo apt install mingw-w64</code></pre>
 <h2 id="installation">INSTALLATION</h2>
-<p><span class="ja">つぎのコマンドを実行すると，</span> <code>~/.lamb</code> <span class="ja">に必要な諸々のファイルがインストールされます．</span></p>
+<p>つぎのコマンドを実行すると， <code>~/.lamb</code> に必要な諸々のファイルがインストールされます．</p>
 <code>
 <pre>$ git clone git://github.com/wejournal/lamb.git
 $ cd lamb
 $ make -j8
-$ make install # ~/.lamb <span class="ja">にインストールする</span>
+$ make install # ~/.lamb にインストールする
 $ export PATH="$HOME/.lamb/bin:$PATH"</code></pre>
 <h2 id="hello-world">HELLO WORLD</h2>
-<p><span class="ja">つぎのような内容の</span> <strong>hello.lam</strong> <span class="ja">を用意してください．</span></p>
+<p>つぎのような内容の <strong>hello.lam</strong> を用意してください．</p>
 <pre><code><strong>def</strong> main := ^stdin.
   "hello world\n"</code></pre>
-<p><span class="ja">実行形式を生成するのは簡単です．</span></p>
+<p>実行形式を生成するのは簡単です．</p>
 <code>
 <pre>$ lamb hello.lam
 $ ./a.out
 hello world</code></pre>
 <h2 id="lexemes">LEXEMES</h2>
-<p>Lamb <span class="ja">の語彙素はつぎのとおり．</span></p>
+<p>Lamb の語彙素はつぎのとおり．</p>
 <ul>
 <li><em>lexeme</em> ::= <code>'</code> | <code>(</code> | <code>)</code> | <code>-&gt;</code> | <code>.</code> | <code>:</code> | <code>:=</code> | <code>^</code> | <code>def</code> | <code>in</code> | <code>let</code> | <code>type</code> | <code>val</code> | <strong>NAT</strong> | <strong>CHAR</strong> | <strong>STRING</strong> | <strong>ID</strong></li>
 </ul>
-<p><span class="ja">ただし</span> <strong>NAT</strong>, <strong>CHAR</strong>, <strong>STRING</strong> <span class="ja">および</span> <strong>ID</strong> <span class="ja">は語彙素のクラスで，正規表現で定義されます．</span></p>
+<p>ただし <strong>NAT</strong>, <strong>CHAR</strong>, <strong>STRING</strong> および <strong>ID</strong> は語彙素のクラスで，正規表現で定義されます．</p>
 <ul>
 <li><strong>SPACE</strong>: <code>/[\t\n\r ]+/</code></li>
 <li><strong>COMMENT</strong>: <code>/--[^\n]*\n/</code></li>
@@ -50,53 +50,53 @@ hello world</code></pre>
 <li><strong>STRING</strong>: <code>/&quot;([^\\&quot;]|\\.)*&quot;/</code></li>
 <li><strong>ID</strong>: <code>/[A-Z_a-z][A-Z_a-z0-9]*/</code></li>
 </ul>
-<p><strong>SPACE</strong> <span class="ja">と</span> <strong>COMMENT</strong> <span class="ja">は字句解析器によって無視されます．</span></p>
+<p><strong>SPACE</strong> と <strong>COMMENT</strong> は字句解析器によって無視されます．</p>
 <h2 id="types">TYPES</h2>
-<p><span class="ja">型は型変数，</span> <span class="ja">基底型，</span> <span class="ja">関数型のみ．</span></p>
+<p>型は型変数， 基底型， 関数型のみ．</p>
 <ul>
 <li><em>ty</em> ::= <em>atty</em> | <em>atty</em> <code>-&gt;</code> <em>ty</em></li>
 <li><em>atty</em> ::= <code>'</code> <strong>ID</strong> | <strong>ID</strong> | <code>(</code> <em>ty</em> <code>)</code></li>
 </ul>
-<p><span class="ja">型変数は，識別子のまえに</span> <code>'</code> <span class="ja">をつけたものです．例．</span></p>
+<p>型変数は，識別子のまえに <code>'</code> をつけたものです．例．</p>
 <pre><code><strong>def</strong> I : 'a -> 'a := ^x. x</code></pre>
-<p><span class="ja">基底型は，</span> <span class="ja">識別子です．例．</span></p>
+<p>基底型は， 識別子です．例．</p>
 <pre><code><strong>def</strong> I : a -> a := ^x. x</code></pre>
-<p><span class="ja">型変数と基底型の違いは，</span> <span class="ja">言葉で説明するのはすこし難しい．そこで例で説明しましょう．</span> <span class="ja">たとえば，チャーチ数の</span> 2 <span class="ja">は基底型でつぎのように書くことができます</span>:</p>
+<p>型変数と基底型の違いは， 言葉で説明するのはすこし難しい．そこで例で説明しましょう． たとえば，チャーチ数の 2 は基底型でつぎのように書くことができます:</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">ここで</span> <code>a -&gt; a</code> <span class="ja">という部分に着目しますと，</span> <span class="ja">これは</span> <code>two</code> <span class="ja">の型に</span>2<span class="ja">回出現することがわかります</span> (<code>-&gt;</code> <span class="ja">が右結合なので，</span> <code>(a -&gt; a) -&gt; a -&gt; a = (a -&gt; a) -&gt; (a -&gt; a)</code> <span class="ja">ということに注意してください</span>)<span class="ja">．</span> <span class="ja">そこで</span> <code>'b = a -&gt; a</code> <span class="ja">とおいて，</span> <span class="ja">これをひとつにまとめたい．</span> <span class="ja">それなら型変数でもって，つぎのように書いてもよろしい</span>:</p>
+<p>ここで <code>a -&gt; a</code> という部分に着目しますと， これは <code>two</code> の型に2回出現することがわかります (<code>-&gt;</code> が右結合なので， <code>(a -&gt; a) -&gt; a -&gt; a = (a -&gt; a) -&gt; (a -&gt; a)</code> ということに注意してください)． そこで <code>'b = a -&gt; a</code> とおいて， これをひとつにまとめたい． それなら型変数でもって，つぎのように書いてもよろしい:</p>
 <pre><code><strong>def</strong> two : 'b -> 'b := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">ここで</span> <code>'b = a -&gt; a</code> <span class="ja">であることは，</span> <span class="ja">処理系によって推論されます．</span> <span class="ja">ところが基底型でつぎのようには書けません</span>:</p>
-<pre><code><em>-- <span class="ja">これは非合法</span></em>
+<p>ここで <code>'b = a -&gt; a</code> であることは， 処理系によって推論されます． ところが基底型でつぎのようには書けません:</p>
+<pre><code><em>-- これは非合法</em>
 <strong>def</strong> two : c -> c := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">なんとなれば，</span> <code>c</code> <span class="ja">というのは基底型であって，関数型ではないからです．</span> <span class="ja">関数型でないのにもかかわらず関数としてもちいているので，</span> <span class="ja">エラーになるというわけです．</span></p>
-<p><span class="ja">型変数は，そこに具体的な，すなわち基底型もしくは関数型が代入されることを表すわけです．</span></p>
-<h3 id="型変数と基底型のスコープ"><span class="ja">型変数と基底型のスコープ</span></h3>
-<p><span class="ja">型変数と基底型にはスコープがあります．</span> <span class="ja">たとえば，つぎのように</span> <code>one</code> <span class="ja">と</span> <code>two</code> <span class="ja">を定義した場合，</span> <code>one</code> <span class="ja">の型に含まれる</span> <code>a</code> <span class="ja">と</span> <code>two</code> <span class="ja">の型に含まれる</span> <code>a</code> <span class="ja">はべつのものである，</span> <span class="ja">と考えるほうが自然でしょう．</span></p>
+<p>なんとなれば， <code>c</code> というのは基底型であって，関数型ではないからです． 関数型でないのにもかかわらず関数としてもちいているので， エラーになるというわけです．</p>
+<p>型変数は，そこに具体的な，すなわち基底型もしくは関数型が代入されることを表すわけです．</p>
+<h3 id="型変数と基底型のスコープ">型変数と基底型のスコープ</h3>
+<p>型変数と基底型にはスコープがあります． たとえば，つぎのように <code>one</code> と <code>two</code> を定義した場合， <code>one</code> の型に含まれる <code>a</code> と <code>two</code> の型に含まれる <code>a</code> はべつのものである， と考えるほうが自然でしょう．</p>
 <pre><code><strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
 <strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">では，つぎの場合はどうでしょうか？</span></p>
+<p>では，つぎの場合はどうでしょうか？</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> y : a := f x <strong>in</strong>
     f y</code></pre>
-<p><span class="ja">すくなくともわたしは，</span> <code>y : a</code> <span class="ja">という部分の</span> <code>a</code> <span class="ja">は，</span> <code>two</code> <span class="ja">の型に含まれる</span> <code>a</code> <span class="ja">と同じ型を表しているつもりです．</span></p>
-<p>Lamb <span class="ja">では，この場合</span> <code>two</code> <span class="ja">の型に含まれる</span> <code>a</code> <span class="ja">と，</span> <code>y : a</code> <span class="ja">の</span> <code>a</code> <span class="ja">は同じ型として扱われます．</span> <span class="ja">したがって，上記の例は合法です．</span> <span class="ja">基底型だけでなく型変数についてもまったく同様に扱われます．</span></p>
-<p><span class="ja">ところが，プログラム全体ですべての</span> <code>a</code> <span class="ja">が同じ型として扱われるわけではありません．</span> <span class="ja">たとえば，この節の最初で示したつぎの例では，</span> <code>a</code> <span class="ja">はべつの型として扱われます．</span></p>
+<p>すくなくともわたしは， <code>y : a</code> という部分の <code>a</code> は， <code>two</code> の型に含まれる <code>a</code> と同じ型を表しているつもりです．</p>
+<p>Lamb では，この場合 <code>two</code> の型に含まれる <code>a</code> と， <code>y : a</code> の <code>a</code> は同じ型として扱われます． したがって，上記の例は合法です． 基底型だけでなく型変数についてもまったく同様に扱われます．</p>
+<p>ところが，プログラム全体ですべての <code>a</code> が同じ型として扱われるわけではありません． たとえば，この節の最初で示したつぎの例では， <code>a</code> はべつの型として扱われます．</p>
 <pre><code><strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
 <strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">まれではありますが，</span> <code>one</code> <span class="ja">と</span> <code>two</code> <span class="ja">の</span> <code>a</code> <span class="ja">を同じ型として扱いたいこともあるかもしれません．</span> <span class="ja">その場合，</span> <code>type</code> <span class="ja">宣言をすればよろしい</span>:</p>
+<p>まれではありますが， <code>one</code> と <code>two</code> の <code>a</code> を同じ型として扱いたいこともあるかもしれません． その場合， <code>type</code> 宣言をすればよろしい:</p>
 <pre><code><strong>type</strong> a
 <strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
 <strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p><span class="ja">この仕様は</span> FFI <span class="ja">を書くとき便利です．このことはのちのちの節でくわしく説明します．</span></p>
+<p>この仕様は FFI を書くとき便利です．このことはのちのちの節でくわしく説明します．</p>
 <h2 id="expressions">EXPRESSIONS</h2>
-<p><span class="ja">式は自然数，文字，文字列，変数，適用，抽象そして</span> <code>let</code> <span class="ja">です．</span></p>
+<p>式は自然数，文字，文字列，変数，適用，抽象そして <code>let</code> です．</p>
 <ul>
-<li><em>asc</em> ::= <span class="ja">ε</span> | <code>:</code> <em>ty</em></li>
+<li><em>asc</em> ::= ε | <code>:</code> <em>ty</em></li>
 <li><em>exp</em> ::= <em>appexp</em> | <code>^</code> <strong>ID</strong> <em>asc</em> <code>.</code> <em>exp</em> | <code>let</code> <strong>ID</strong> <em>asc</em> <code>:=</code> <em>exp</em> <code>in</code> <em>exp</em></li>
 <li><em>appexp</em> ::= <strong>atexp</strong> | <strong>appexp</strong> <strong>atexp</strong></li>
 <li><em>atexp</em> ::= <strong>NAT</strong> | <strong>CHAR</strong> | <strong>STRING</strong> | <strong>ID</strong> | <code>(</code> <em>exp</em> <code>)</code></li>
 </ul>
-<p><span class="ja">このうち自然数，文字および文字列は，変数，抽象，抽象のみっつの要素に還元できます．</span> <span class="ja">具体的には，自然数と文字はチャーチ数，文字列はチャーチリストにエンコーディングされます．</span> <span class="ja">たとえば，</span></p>
+<p>このうち自然数，文字および文字列は，変数，抽象，抽象のみっつの要素に還元できます． 具体的には，自然数と文字はチャーチ数，文字列はチャーチリストにエンコーディングされます． たとえば，</p>
 <ul>
 <li><code>0 = ^f. ^x. x</code></li>
 <li><code>1 = ^f. ^x. f x</code></li>
@@ -108,42 +108,42 @@ hello world</code></pre>
 <li>&quot;a&quot; = <code>^f. ^x. f 'a' x</code></li>
 <li><code>&quot;abc&quot; = ^f. ^x. f 'a' (f 'b' (f 'c' x))</code></li>
 </ul>
-<p><span class="ja">です．</span> <span class="ja">したがって</span> Lamb <span class="ja">の式のうち本質的な要素は，変数，適用，抽象，そして</span> <code>let</code> <span class="ja">といえます．</span></p>
-<h3 id="let-多相">Let <span class="ja">多相</span></h3>
-<p>Lamb <span class="ja">は</span> let <span class="ja">多相をサポートしています．</span> <span class="ja">したがって，</span> <span class="ja">つぎのコードは合法です</span>:</p>
+<p>です． したがって Lamb の式のうち本質的な要素は，変数，適用，抽象，そして <code>let</code> といえます．</p>
+<h3 id="let-多相">Let 多相</h3>
+<p>Lamb は let 多相をサポートしています． したがって， つぎのコードは合法です:</p>
 <pre><code><strong>def</strong> I :=
   <strong>let</strong> I := ^x. x <strong>in</strong>
     I I</code></pre>
-<p><span class="ja">もし多相性がない単相な言語だとすれば，</span> <span class="ja">このコードは型が循環してしまうため，型エラーにならなければならないことに注意してください．</span></p>
-<p><span class="ja">ところでさきほど，</span> Lamb <span class="ja">では</span> let <span class="ja">はほかの要素に還元できない，</span> <span class="ja">本質的な要素だと述べました．それはなぜでしょうか．</span> <span class="ja">型なしラムダ計算では，</span> <code>let x := e1 in e2</code> <span class="ja">は</span> <code>(^x. e2) e1</code> <span class="ja">の略記として定義することができるでしょう．</span> <span class="ja">それでは，</span> Lamb <span class="ja">ではどうなのでしょうか？</span> <span class="ja">それができないのです．</span> <span class="ja">前述した</span> let <span class="ja">多相の例を考えてみますと</span></p>
+<p>もし多相性がない単相な言語だとすれば， このコードは型が循環してしまうため，型エラーにならなければならないことに注意してください．</p>
+<p>ところでさきほど， Lamb では let はほかの要素に還元できない， 本質的な要素だと述べました．それはなぜでしょうか． 型なしラムダ計算では， <code>let x := e1 in e2</code> は <code>(^x. e2) e1</code> の略記として定義することができるでしょう． それでは， Lamb ではどうなのでしょうか？ それができないのです． 前述した let 多相の例を考えてみますと</p>
 <pre><code><strong>def</strong> I :=
   <strong>let</strong> I := ^x. x <strong>in</strong>
     I I</code></pre>
-<p><span class="ja">は合法にもかかわらず</span></p>
+<p>は合法にもかかわらず</p>
 <pre><code><strong>def</strong> I :=
   (^I. I I) (^x. x)</code></pre>
-<p><span class="ja">は型エラーになってしまい，非合法です．</span></p>
-<p><span class="ja">それでは，単純型つきラムダ計算ではどうなのでしょうか．</span> <span class="ja">じつは，単純型つきラムダ計算では</span> <code>let x := e1 in e2</code> <span class="ja">を</span> <code>(^x. e2) e1</code> <span class="ja">と定義しても問題ないのです．</span> <span class="ja">なぜならもともと単相なので</span></p>
+<p>は型エラーになってしまい，非合法です．</p>
+<p>それでは，単純型つきラムダ計算ではどうなのでしょうか． じつは，単純型つきラムダ計算では <code>let x := e1 in e2</code> を <code>(^x. e2) e1</code> と定義しても問題ないのです． なぜならもともと単相なので</p>
 <pre><code><strong>def</strong> I :=
   <strong>let</strong> I := ^x. x <strong>in</strong>
     I I</code></pre>
-<p><span class="ja">も型エラーにならなければならないからです．</span> <span class="ja">両方型エラーになるか，もしくは両方型エラーにならないならば，</span> <code>let x := e1 in e2</code> <span class="ja">を</span> <code>(^x. e2) e1</code> <span class="ja">と定義しても問題ありません．</span> Lamb <span class="ja">には多相性があるためこの条件を満たさないので，単なる略記として定義できないのです．</span></p>
+<p>も型エラーにならなければならないからです． 両方型エラーになるか，もしくは両方型エラーにならないならば， <code>let x := e1 in e2</code> を <code>(^x. e2) e1</code> と定義しても問題ありません． Lamb には多相性があるためこの条件を満たさないので，単なる略記として定義できないのです．</p>
 <h2 id="declarations">DECLARATIONS</h2>
-<p><span class="ja">宣言は</span> <code>type</code>, <code>val</code>, <code>def</code> <span class="ja">のみっつです．</span></p>
+<p>宣言は <code>type</code>, <code>val</code>, <code>def</code> のみっつです．</p>
 <ul>
-<li><em>decls</em> ::= <span class="ja">ε</span> | <em>decl</em> <em>decls</em></li>
+<li><em>decls</em> ::= ε | <em>decl</em> <em>decls</em></li>
 <li><em>decl</em> ::= <code>type</code> <strong>ID</strong> | <code>val</code> <strong>ID</strong> <code>:</code> <em>ty</em> | <code>def</code> <strong>ID</strong> <em>asc</em> <code>:=</code> <em>exp</em></li>
 </ul>
-<p><span class="ja">またプログラム全体は，宣言の列です．</span></p>
+<p>またプログラム全体は，宣言の列です．</p>
 <ul>
 <li><em>program</em> ::= <em>decls</em></li>
 </ul>
-<h3 id="単相宣言"><span class="ja">単相宣言</span></h3>
-<p><code>type</code> <span class="ja">は単相宣言といい，</span> <span class="ja">基底型が単相であることを宣言します．</span> <span class="ja">たとえばつぎのコードでは，</span> <code>a</code> <span class="ja">は多相ですが</span> <code>false</code> <span class="ja">は単相です．</span></p>
+<h3 id="単相宣言">単相宣言</h3>
+<p><code>type</code> は単相宣言といい， 基底型が単相であることを宣言します． たとえばつぎのコードでは， <code>a</code> は多相ですが <code>false</code> は単相です．</p>
 <pre><code><strong>type</strong> false
 <strong>val</strong> absurd : false -> a
 </code></pre>
-<p><span class="ja">これは一見無意味な仕様に思えるかもしれませんが，後述する</span> FFI <span class="ja">を書くときに便利です．</span> <span class="ja">たとえば，</span> <span class="ja">チャーチ数では遅いから，</span> C <span class="ja">の</span> <code>uint64_t</code> <span class="ja">などを直接使いたい，としましょう．</span> <span class="ja">その場合，つぎのように書くことになります</span>:</p>
+<p>これは一見無意味な仕様に思えるかもしれませんが，後述する FFI を書くときに便利です． たとえば， チャーチ数では遅いから， C の <code>uint64_t</code> などを直接使いたい，としましょう． その場合，つぎのように書くことになります:</p>
 <pre><code><strong>type</strong> uint64_t
 <strong>val</strong> zero64 : uint64_t
 <strong>val</strong> succ64 : uint64_t -> uint64_t
@@ -153,65 +153,65 @@ hello world</code></pre>
 <strong>val</strong> div64 : uint64_t -> uint64_t -> uint64_t
 <strong>val</strong> mod64 : uint64_t -> uint64_t -> uint64_t
 </code></pre>
-<p><span class="ja">しかし</span> <code>uint64_t</code> <span class="ja">に多相になってほしいわけではないでしょう．</span> <span class="ja">そこで</span> <code>type</code> <span class="ja">で単相であることを宣言しておくわけです．</span></p>
-<p><span class="ja">この仕様に疑問をもたれるかたもいるかもしれません．</span> <span class="ja">つまり，どうして単相な型と多相な型をもともと字句的に，</span> <span class="ja">たとえば</span> <code>Int</code> <span class="ja">のように大文字で始まる場合は単相，</span> <code>a</code> <span class="ja">のように小文字で始まる場合は多相というふうにしないのか？</span> <span class="ja">これには，根拠があります．</span> <span class="ja">前述したように型変数と基底型にはスコープがあるので，</span> <span class="ja">単相宣言がなくとも，</span> <span class="ja">単相な型を表すことは可能だからです．</span></p>
-<p><span class="ja">どういうことでしょうか？</span> <span class="ja">まず，先ほど，つぎのような例では</span> <code>two</code> <span class="ja">の型に含まれる</span> <code>a</code> <span class="ja">と</span> <code>y : a</code> <span class="ja">の</span> <code>a</code> <span class="ja">は同じ型として扱われると述べました</span>:</p>
+<p>しかし <code>uint64_t</code> に多相になってほしいわけではないでしょう． そこで <code>type</code> で単相であることを宣言しておくわけです．</p>
+<p>この仕様に疑問をもたれるかたもいるかもしれません． つまり，どうして単相な型と多相な型をもともと字句的に， たとえば <code>Int</code> のように大文字で始まる場合は単相， <code>a</code> のように小文字で始まる場合は多相というふうにしないのか？ これには，根拠があります． 前述したように型変数と基底型にはスコープがあるので， 単相宣言がなくとも， 単相な型を表すことは可能だからです．</p>
+<p>どういうことでしょうか？ まず，先ほど，つぎのような例では <code>two</code> の型に含まれる <code>a</code> と <code>y : a</code> の <code>a</code> は同じ型として扱われると述べました:</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> y : a := f x <strong>in</strong>
     f y</code></pre>
-<p><span class="ja">このとき，ある種の視点では</span> <code>a</code> <span class="ja">は単相な型と考えることもできます．</span> <span class="ja">たとえば，もし</span></p>
+<p>このとき，ある種の視点では <code>a</code> は単相な型と考えることもできます． たとえば，もし</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> I : a -> a := ^y. y <strong>in</strong>
     I (f (f x))</code></pre>
-<p><span class="ja">と定義したとすれば，これは以前合法ですが，</span> <code>I</code> <span class="ja">は多相ではないので，</span></p>
+<p>と定義したとすれば，これは以前合法ですが， <code>I</code> は多相ではないので，</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> I : a -> a := ^y. y <strong>in</strong>
     I f (f x)</code></pre>
-<p><span class="ja">ということはできないのです．このように書きたければ，</span></p>
+<p>ということはできないのです．このように書きたければ，</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> I : (a -> a) -> a -> a := ^y. y <strong>in</strong>
     I f (f x)</code></pre>
-<p><span class="ja">のように具体化するか，もしくは</span></p>
+<p>のように具体化するか，もしくは</p>
 <pre><code><strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x.
   <strong>let</strong> I : b -> b := ^y. y <strong>in</strong>
     I f (f x)</code></pre>
-<p><span class="ja">というふうに，</span> <code>a</code> <span class="ja">とべつの変数を選んで多相にすればよろしい．</span></p>
-<p><span class="ja">言いかえれば，</span> <span class="ja">型変数と基底型にスコープがある仕様によって，</span> <span class="ja">型環境に含まれる型変数と基底型は多相にできない，</span> <span class="ja">つまり単相であるということです．</span></p>
-<p><span class="ja">したがって，</span> <code>type a</code> <span class="ja">という宣言は，ただ単純に，</span> <span class="ja">型環境に</span> <code>a</code> <span class="ja">という基底型を加えればよろしい．</span> <span class="ja">そうすれば型変数と基底型にスコープがある仕様から，</span> <span class="ja">自然に</span> <code>a</code> <span class="ja">を単相にすることができるのです．</span></p>
-<h3 id="val-宣言">val <span class="ja">宣言</span></h3>
-<p><code>val</code> <span class="ja">宣言にはふたつの用途があります．</span> <span class="ja">ひとつめは分割コンパイル，</span> <span class="ja">ふたつめは</span> FFI <span class="ja">です．</span></p>
-<h4 id="分割コンパイル"><span class="ja">分割コンパイル</span></h4>
-<p>Lamb <span class="ja">は分割コンパイルをサポートしています．</span> <span class="ja">たとえば，つぎのふたつのコードを，べつべつにコンパイルしてリンクしたいとしましょう．</span></p>
+<p>というふうに， <code>a</code> とべつの変数を選んで多相にすればよろしい．</p>
+<p>言いかえれば， 型変数と基底型にスコープがある仕様によって， 型環境に含まれる型変数と基底型は多相にできない， つまり単相であるということです．</p>
+<p>したがって， <code>type a</code> という宣言は，ただ単純に， 型環境に <code>a</code> という基底型を加えればよろしい． そうすれば型変数と基底型にスコープがある仕様から， 自然に <code>a</code> を単相にすることができるのです．</p>
+<h3 id="val-宣言">val 宣言</h3>
+<p><code>val</code> 宣言にはふたつの用途があります． ひとつめは分割コンパイル， ふたつめは FFI です．</p>
+<h4 id="分割コンパイル">分割コンパイル</h4>
+<p>Lamb は分割コンパイルをサポートしています． たとえば，つぎのふたつのコードを，べつべつにコンパイルしてリンクしたいとしましょう．</p>
 <p><strong>k.lam</strong>:</p>
 <pre><code><strong>def</strong> K := ^x. ^_. x</code></pre>
 <p><strong>sep.lam</strong>:</p>
 <pre><code><strong>def</strong> main := K("hello world\n")</code></pre>
-<p><span class="ja">その場合，まず</span> <strong>k.lam</strong> <span class="ja">の型定義をするファイルが必要です．</span> <span class="ja">手書きすることもできますが，さいわい，これは</span> <code>-i</code> <span class="ja">オプションで自動生成できます</span>:</p>
+<p>その場合，まず <strong>k.lam</strong> の型定義をするファイルが必要です． 手書きすることもできますが，さいわい，これは <code>-i</code> オプションで自動生成できます:</p>
 <code>
 <pre>$ lamb -o k.la -i k.lam</code></pre>
-<p><span class="ja">拡張子はなんでもかまいませんが，</span> <strong>.la</strong> <span class="ja">という拡張子をつける習慣があります．</span></p>
+<p>拡張子はなんでもかまいませんが， <strong>.la</strong> という拡張子をつける習慣があります．</p>
 <p><strong>k.la</strong>:</p>
 <pre><code><strong>val</strong> K : a -> b -> a</code></pre>
-<p><span class="ja">つぎに，</span> <strong>k.lam</strong> <span class="ja">と</span> <strong>sep.lam</strong> <span class="ja">を</span> <code>-c</code> <span class="ja">オプションをつけてコンパイルします．</span> <strong>sep.lam</strong> <span class="ja">は</span> <strong>k.lam</strong> <span class="ja">に依存しているので，</span> <span class="ja">コンパイルするために型定義ファイルが必要です．</span> <span class="ja">そのため，</span> <span class="ja">自動生成した</span> <strong>k.la</strong> <span class="ja">を引数として与えます．</span></p>
+<p>つぎに， <strong>k.lam</strong> と <strong>sep.lam</strong> を <code>-c</code> オプションをつけてコンパイルします． <strong>sep.lam</strong> は <strong>k.lam</strong> に依存しているので， コンパイルするために型定義ファイルが必要です． そのため， 自動生成した <strong>k.la</strong> を引数として与えます．</p>
 <code>
 <pre>$ lamb -c k.lam
 $ lamb -c k.la sep.lam</code></pre>
-<p><span class="ja">引数の順番には意味があります．</span> <span class="ja">依存関係の順番にコマンドラインから与えなければなりません．</span> <span class="ja">エラーメッセージの表示位置など厳密には細かい違いがありますが，</span> <span class="ja">基本的には，</span> <code>cat</code> <span class="ja">で結合したファイルをコンパイルしていると考えてください．</span></p>
-<p><span class="ja">最後に，生成されたオブジェクトコードを</span> <code>--link</code> <span class="ja">オプションでリンクします</span>:</p>
+<p>引数の順番には意味があります． 依存関係の順番にコマンドラインから与えなければなりません． エラーメッセージの表示位置など厳密には細かい違いがありますが， 基本的には， <code>cat</code> で結合したファイルをコンパイルしていると考えてください．</p>
+<p>最後に，生成されたオブジェクトコードを <code>--link</code> オプションでリンクします:</p>
 <code>
 <pre>$ lamb --link k.lam.o sep.lam.o
 $ ./a.out
 hello world</code></pre>
-<p><span class="ja">リンクは</span> <code>ld</code> <span class="ja">などでもできますが，</span> libc <span class="ja">や</span> Lamb <span class="ja">のランタイムも手動でリンクしなければなりません．</span> <code>lamb</code> <span class="ja">コマンドでリンクすることがもっとも簡単です．</span></p>
+<p>リンクは <code>ld</code> などでもできますが， libc や Lamb のランタイムも手動でリンクしなければなりません． <code>lamb</code> コマンドでリンクすることがもっとも簡単です．</p>
 <h4 id="ffi">FFI</h4>
-<p>Lamb <span class="ja">は</span> FFI <span class="ja">もサポートしています．</span></p>
-<p><span class="ja">この節の最後に載せてある内容の</span> <strong>ffi.lam</strong> <span class="ja">と</span> <strong>ffi.c</strong> <span class="ja">を用意してください．</span> <span class="ja">まず，</span> <strong>ffi.c</strong> <span class="ja">をコンパイルしておきましょう．</span></p>
+<p>Lamb は FFI もサポートしています．</p>
+<p>この節の最後に載せてある内容の <strong>ffi.lam</strong> と <strong>ffi.c</strong> を用意してください． まず， <strong>ffi.c</strong> をコンパイルしておきましょう．</p>
 <code>
 <pre>$ gcc -I$HOME/.lamb/include -c -o ffi.c.o ffi.c</code></pre>
-<p><span class="ja">つぎに，</span> <strong>ffi.lam</strong> <span class="ja">をコンパイルしておきます．</span></p>
+<p>つぎに， <strong>ffi.lam</strong> をコンパイルしておきます．</p>
 <code>
 <pre>$ lamb -c -o ffi.lam.o ffi.lam</code></pre>
-<p><span class="ja">最後に，</span> <strong>ffi.c.o</strong> <span class="ja">と</span> <strong>ffi.lam.o</strong> <span class="ja">をリンクします．</span></p>
+<p>最後に， <strong>ffi.c.o</strong> と <strong>ffi.lam.o</strong> をリンクします．</p>
 <code>
 <pre>$ lamb --link ffi.lam.o ffi.c.o
 $ ./a.out
