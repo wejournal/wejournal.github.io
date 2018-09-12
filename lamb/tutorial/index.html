@@ -70,24 +70,6 @@ hello world</code></pre>
 <strong>def</strong> two : c -> c := ^f. ^x. f (f x)</code></pre>
 <p>なんとなれば， <code>c</code> というのは基底型であって，関数型ではないからです． 関数型でないのにもかかわらず関数としてもちいているので， エラーになるというわけです．</p>
 <p>型変数は，そこに具体的な，すなわち基底型もしくは関数型が代入されることを表すわけです．</p>
-<h3 id="型変数と基底型のスコープ">型変数と基底型のスコープ</h3>
-<p>型変数と基底型にはスコープがあります． たとえば，つぎのように <code>one</code> と <code>two</code> を定義した場合， <code>one</code> の型に含まれる <code>a</code> と <code>two</code> の型に含まれる <code>a</code> はべつのものである， と考えるほうが自然でしょう．</p>
-<pre><code><strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
-<strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p>では，つぎの場合はどうでしょうか？</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> y : a := f x <strong>in</strong>
-    f y</code></pre>
-<p>すくなくともわたしは， <code>y : a</code> という部分の <code>a</code> は， <code>f : a -&gt; a</code> や <code>x : a</code> の型に含まれる <code>a</code> と同じ型を表しているつもりです．</p>
-<p>Lamb では，この場合 <code>two</code> の型に含まれる <code>a</code> と， <code>y : a</code> の <code>a</code> は同じ型として扱われます． したがって，上記の例は合法です． 基底型だけでなく型変数についてもまったく同様に扱われます．</p>
-<p>ところが，プログラム全体ですべての <code>a</code> が同じ型として扱われるわけではありません． たとえば，この節の最初で示したつぎの例では， <code>a</code> はべつの型として扱われます．</p>
-<pre><code><strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
-<strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p>まれではありますが， <code>one</code> と <code>two</code> の <code>a</code> を同じ型として扱いたいこともあるかもしれません． その場合， <code>type</code> 宣言をすればよろしい:</p>
-<pre><code><strong>type</strong> a
-<strong>def</strong> one : (a -> a) -> a -> a := ^f. ^x. f x
-<strong>def</strong> two : (a -> a) -> a -> a := ^f. ^x. f (f x)</code></pre>
-<p>この仕様は FFI を書くとき便利です．このことはのちのちの節でくわしく説明します．</p>
 <h2 id="expressions">EXPRESSIONS</h2>
 <p>式は自然数，文字，文字列，変数，適用，抽象そして <code>let</code> です．</p>
 <ul>
@@ -154,30 +136,6 @@ hello world</code></pre>
 <strong>val</strong> mod64 : uint64_t -> uint64_t -> uint64_t
 </code></pre>
 <p>しかし <code>uint64_t</code> に多相になってほしいわけではないでしょう． そこで <code>type</code> で単相であることを宣言しておくわけです．</p>
-<p>この仕様に疑問をもたれるかたもいるかもしれません． つまり，どうして単相な型と多相な型をもともと字句的に， たとえば <code>Int</code> のように大文字で始まる場合は単相， <code>a</code> のように小文字で始まる場合は多相というふうにしないのか？ これには，根拠があります． 前述したように型変数と基底型にはスコープがあるので， 単相宣言がなくとも， 単相な型を表すことは可能だからです．</p>
-<p>どういうことでしょうか？ まず，先ほど，つぎのような例では <code>two</code> の型に含まれる <code>a</code> と <code>y : a</code> の <code>a</code> は同じ型として扱われると述べました:</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> y : a := f x <strong>in</strong>
-    f y</code></pre>
-<p>このとき，ある種の視点では <code>a</code> は単相な型と考えることもできます． たとえば，もし</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> I : a -> a := ^y. y <strong>in</strong>
-    I (f (f x))</code></pre>
-<p>と定義したとすれば，これは依然合法ですが， <code>I</code> は多相ではないので，</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> I : a -> a := ^y. y <strong>in</strong>
-    I f (f x)</code></pre>
-<p>ということはできないのです．このように書きたければ，</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> I : (a -> a) -> a -> a := ^y. y <strong>in</strong>
-    I f (f x)</code></pre>
-<p>のように具体化するか，もしくは</p>
-<pre><code><strong>def</strong> two := ^f : a -> a. ^x : a.
-  <strong>let</strong> I : b -> b := ^y. y <strong>in</strong>
-    I f (f x)</code></pre>
-<p>というふうに， <code>a</code> とべつの変数を選んで多相にすればよろしい．</p>
-<p>言いかえれば， 型変数と基底型にスコープがある仕様によって， 型環境に含まれる型変数と基底型は多相にできない， つまり単相であるということです．</p>
-<p>したがって， <code>type a</code> という宣言は，ただ単純に， 型環境に <code>a</code> という基底型を加えればよろしい． そうすれば型変数と基底型にスコープがある仕様から， 自然に <code>a</code> を単相にすることができるのです．</p>
 <h3 id="val-宣言">val 宣言</h3>
 <p><code>val</code> 宣言にはふたつの用途があります． ひとつめは分割コンパイル， ふたつめは FFI です．</p>
 <h4 id="分割コンパイル">分割コンパイル</h4>
